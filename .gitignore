@@ -1,3 +1,9 @@
+#pycharm
+.idea/
+
+# django settings
+settings.txt
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

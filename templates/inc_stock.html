@@ -1,0 +1,37 @@
+{% load i18n static %}
+
+{% if e.active %}
+<tr>
+    <td>{{ e.name }}</td>
+    <td>{{ e.group }}</td>
+    <td>{{ e.supplier }}</td>
+    <td>{{ e.brand }}</td>
+    <td>{{ e.origin }}</td>
+</tr>
+<tr>
+    <td></td>
+    <td colspan="4">
+        <table cellspacing="0">
+            <thead>
+                <th>Packungsgröße</th>
+                <th>Preis</th>
+                <th>Preis<br>Gesamteinheit</th>
+                <th>Bestellmenge</th>
+                <th>Aktion</th>
+            </thead>
+            {% for sq in e.shippingquantity_set.all %}
+                <form action="/add_to_basket/{{ e.id }}/{{ sq.id }}" method="post">
+                {% csrf_token %}
+                <tr>
+                    <td>{{ sq.amount }} {{ sq.packaging_unit }}</td>
+                    <td>{{ sq.price }} Euro</td>
+                    <td>{{ sq.price_per_unit }} Euro / {{ sq.packaging_unit }}</td>
+                    <td><input type="number" id="e.id-sq.id" name="order_quant"> x {{ sq.amount }} {{ sq.packaging_unit }}</td>
+                    <td><input type="submit" value="hinzufuegen"></td>
+                </tr>
+                </form>
+            {% endfor %}
+        </table>
+    </td>
+</tr>
+{% endif %}

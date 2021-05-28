@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style type="text/css">
+      td {
+          padding-left: 10px;
+          padding-right: 10px;
+          padding-bottom: 5px;
+          padding-top: 5px;
+          border-bottom: black 1px solid;
+          text-align: right;
+      }
+      th {
+          text-align: center;
+      }
+  </style>
+  <title>{% block title %}Einkaufsgemeinschaft FiPhi{% endblock %}</title>
+</head>
+<body>
+  <main>
+{% if user.is_authenticated %}
+    {% block content %}
+    {% endblock %}
+{% else %}
+     {% block auth %}
+          <p>You are not logged in</p>
+          <a href="{% url 'login' %}">Log In</a>
+          <a href="{% url 'signup' %}">Sign Up</a>
+    {% endblock %}
+{% endif %}
+  </main>
+</body>
+</html>

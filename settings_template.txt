@@ -1,0 +1,9 @@
+[email]
+FROM =
+HOST =
+PORT =
+USER = 
+PASS =
+
+[django]
+SECRET_KEY =
