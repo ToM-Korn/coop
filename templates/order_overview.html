@@ -1,37 +1,34 @@
 {% extends 'base.html' %}
 {% load i18n static %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Order Overview{% endblock %}
 
 {% block content %}
 
     <h1>Hi {{ user.username }}!</h1>
 
     <p><a href="{% url 'logout' %}">Log Out</a></p>
-    {% if user.is_staff %}
-    <p><a href="{% url 'order_overview' %}">{% trans "Übersicht aller Bestellungen" %}</a></p>
-    {% endif %}
+    <p><a href="{% url 'home' %}">Home</a></p>
 
-    <h2>Dein aktuelle Bestellung</h2>
-    {% if user_order.fullfilled == False %}
-        {% trans "Bestellnummer:" %} {{ user_order.id }}<br>
-        {% trans "Gesamtgewicht:" %} {{ user_order.total_weight | floatformat:2 }} <br>
-        {% trans "Gesamtpreis:" %} {{ user_order.total_price | floatformat:2 }} <br>
-    {% for be in user_order.basketelement_set.all %}
-        {{ be.name }}
-    {% endfor  %}
-    {% endif %}
-
-
-    <h2>Dein Warenkorb</h2>
-        <table cellspacing="0">
+    <h2>Alle Bestellung</h2>
+            <table cellspacing="0">
             <thead>
-                <th>Bestellmenge</th>
-                <th>Name</th>
+                <th>Benutzer</th>
                 <th>Gesamtgewicht</th>
                 <th>Gesamtpreis</th>
-                <th>Aktion</th>
             </thead>
+    {% for o in orders %}
+        <tr>
+            <td>{{ o.user }}</td>
+            <td>{{ o.total_weight | floatformat:2 }}</td>
+            <td>{{ o.total_price | floatformat:2 }}</td>
+        </tr>
+    {% endfor  %}
+            </table>
+        {% trans "Gesamtgewicht:" %} {{ total_weight | floatformat:2 }} <br>
+        {% trans "Gesamtpreis:" %} {{ total_price | floatformat:2 }} <br>
+
+
         {% for be in user_basket.basketelement_set.all %}
             {% include "inc_basket.html" with e=be %}
         {% endfor %}

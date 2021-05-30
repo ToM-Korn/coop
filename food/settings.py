@@ -140,6 +140,7 @@ LOGOUT_REDIRECT_URL = 'home'
 
 email = config['email']
 EMAIL_FROM = email['FROM']
+EMAIL_ADMIN = email['ADMIN']
 EMAIL_HOST = email['HOST']
 EMAIL_PORT = int(email['PORT'])
 EMAIL_HOST_USER = email['USER']

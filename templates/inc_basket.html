@@ -3,7 +3,7 @@
 <tr>
     <td>{{ e.amount }} * {{ e.element.amount }} {{ e.element.packaging_unit }}</td>
     <td>{{ e.element.article.name }}</td>
-    <td>{{ e.total_weight }} {{ e.element.packaging_unit }}</td>
+    <td>{{ e.total_weight | floatformat:2 }} {{ e.element.packaging_unit }}</td>
     <td>{{ e.total_price }}</td>
     <td><a href="{% url 'remove_from_basket' e.id %}">{% trans 'Löschen' %}</a></td>
 </tr>

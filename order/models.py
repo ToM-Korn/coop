@@ -9,7 +9,7 @@ from django.db.models.signals import post_save, pre_save
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    total_amount = models.FloatField(_('Gesamtsumme'))
+    total_price = models.FloatField(_('Gesamtsumme'))
     total_weight = models.FloatField(_('Gesamtgewicht'))
     fullfilled = models.BooleanField(_('Ausgeliefert'), default=False)
 

@@ -1,9 +1,10 @@
 [email]
-FROM =
-HOST =
-PORT =
-USER = 
-PASS =
+FROM = someone@example.com
+ADMIN = admin@example.com
+HOST = mail.example.com
+PORT = 587
+USER = user
+PASS = pass
 
 [django]
-SECRET_KEY =
+SECRET_KEY = somethingcrypic
