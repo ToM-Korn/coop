@@ -6,7 +6,8 @@ buying syndicate platform
 ## static files for admin templates 
 
 first create a folder "static" in your root folder
-in terminal user "python manage.py collectstatic" to collect the admin interface static files to your static folder
+
+in terminal use: "python manage.py collectstatic" to collect the admin interface static files to your static folder including admin templates
 
 
 ## lighttp config
