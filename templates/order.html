@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{% block title %}{% trans "Bestellung" %}{% endblock %}
+
+{% block content %}
+<h2>{% trans "Deine aktuelle Bestellung" %}</h2>
+    {% if user_order.fullfilled == False %}
+        {% trans "Bestellnummer" %}: {{ user_order.id }}<br>
+        {% trans "Gesamtgewicht" %}: {{ user_order.total_weight | floatformat:2 }} <br>
+        {% trans "Gesamtpreis" %}: {{ user_order.total_price | floatformat:2 }} <br>
+    {% for be in user_order.basketelement_set.all %}
+        {{ be.name }}
+    {% endfor  %}
+    {% endif %}
+{% endblock %}

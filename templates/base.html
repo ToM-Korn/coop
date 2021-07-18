@@ -1,34 +1,162 @@
+{% load i18n static %}
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <style type="text/css">
-      td {
-          padding-left: 10px;
-          padding-right: 10px;
-          padding-bottom: 5px;
-          padding-top: 5px;
-          border-bottom: black 1px solid;
-          text-align: right;
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Main Site: Thomas Krickl; Bootstrap: Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <title>{% block title %}Einkaufsgemeinschaft FiPhi{% endblock %}</title>
+
+    <!-- Bootstrap core CSS -->
+<link href="{% static "bs/css/bootstrap.min.css" %}" rel="stylesheet">
+<link href="{% static "base.css" %}" rel="stylesheet" type="text/css">
+
+
+{% if not user.is_authenticated %}
+<!-- Custom styles for this template -->
+    <link href="{% static "registration/signin.css" %}" rel="stylesheet">
+{% else %}
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
       }
-      th {
-          text-align: center;
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
       }
-  </style>
-  <title>{% block title %}Einkaufsgemeinschaft FiPhi{% endblock %}</title>
+    </style>
+
+
+    <!-- Custom styles for this template -->
+    <link href="{% static "sidebars.css" %}" rel="stylesheet">
+{% endif %}
+{% block styles %}{% endblock %}
+
+
 </head>
-<body>
-  <main>
+  <body>
+
+
 {% if user.is_authenticated %}
+
+{% include "svg_icons.html" %}
+
+<main>
+  <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+        <img class="bi me-2" src="{% static "brand/diet.png" %}" alt="" height="45">
+{#      <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>#}
+      <span class="fs-4">{% trans "EKG FiPhi" %}</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+{#        <a href="#" class="nav-link active" >#}
+        <a href="{% url "home" %}" class="nav-link link-dark" >
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+          {% trans "Einkaufsladen" %}
+        </a>
+      </li>
+      <li>
+        <a href="{% url "basket" %}" class="nav-link link-dark">
+            <i class="me-2"  width="16" data-feather="shopping-cart"></i>
+            {% trans "Mein Warenkorb" %}
+        </a>
+      </li>
+      <li>
+        <a href="{% url "order" %}" class="nav-link link-dark">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>
+          {% trans "Meine Bestellungen" %}
+        </a>
+      </li>
+{#      <li>#}
+{#        <a href="#" class="nav-link link-dark">#}
+{#          <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>#}
+{#          Produkte#}
+{#        </a>#}
+{#      </li>#}
+
+    {% if user.is_staff %}
+        <li>
+            <hr>
+            <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+            {% trans "Verwaltung" %}
+        </li>
+      <li>
+        <a href="{% url "users" %}" class="nav-link link-dark">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+          {% trans "Benutzer" %}
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'order_overview' %}" class="nav-link link-dark">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>
+          {% trans "Bestellungen Verwaltung" %}
+        </a>
+      </li>
+    </ul>
+    {% endif %}
+
+    <hr>
+    <div class="dropdown">
+      <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+        <strong>{{ user.username }}</strong>
+      </a>
+      <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+{#        <li><a class="dropdown-item" href="#"></a></li>#}
+        <li><a class="dropdown-item" href="#">{% trans "Einstellungen" %}</a></li>
+        <li><a class="dropdown-item" href="#">{% trans "Profil" %}</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a  class="dropdown-item" href="{% url 'logout' %}">{% trans "Abmelden" %}</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="b-example-divider"></div>
+  <div class="d-flex flex-column flex-shrink-0 p-3 ">
+
     {% block content %}
     {% endblock %}
+  </div>
+    </main>
 {% else %}
+    <main class="form-signin">
+     <img class="mb-4" src="{% static "brand/diet.png" %}" alt="" width="75" height="75">
      {% block auth %}
-          <p>You are not logged in</p>
-          <a href="{% url 'login' %}">Log In</a>
-          <a href="{% url 'signup' %}">Sign Up</a>
+          <h3>You are not logged in</h3>
+          <a class="btn btn-primary" href="{% url 'login' %}">Log In</a>
+          <a class="btn btn-secondary" href="{% url 'signup' %}">Sign Up</a>
     {% endblock %}
+    </main>
 {% endif %}
-  </main>
+
+
+<script src="{% static "/bs/js/bootstrap.bundle.min.js" %}"></script>
+<script src="{% static "feather.min.js" %}"></script>
+{#<script type="application/javascript">#}
+{#    /* global bootstrap: false */#}
+{#(function () {#}
+{#  'use strict'#}
+{#  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))#}
+{#  tooltipTriggerList.forEach(function (tooltipTriggerEl) {#}
+{#    new bootstrap.Tooltip(tooltipTriggerEl)#}
+{#  }) })()#}
+{#</script>#}
+<script type="application/javascript">
+  feather.replace()
+</script>
+
 </body>
 </html>
+
+
+{# footer todo / imprint todo -- logo from <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>#}

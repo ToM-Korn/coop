@@ -1,27 +1,21 @@
 {% extends 'base.html' %}
 {% load i18n static %}
 
-{% block title %}Order Overview{% endblock %}
+{% block title %}{% trans "Order Overview" %}{% endblock %}
 
 {% block content %}
-
-    <h1>Hi {{ user.username }}!</h1>
-
-    <p><a href="{% url 'logout' %}">Log Out</a></p>
-    <p><a href="{% url 'home' %}">Home</a></p>
-
-    <h2>Alle Bestellung</h2>
-            <table cellspacing="0">
+    <h2>{% trans "Alle Bestellungen" %}</h2>
+            <table class="table table-striped" cellspacing="0">
             <thead>
-                <th>Benutzer</th>
-                <th>Gesamtgewicht</th>
-                <th>Gesamtpreis</th>
+                <th scope="col">{% trans "Benutzer" %}</th>
+                <th scope="col">{% trans "Gesamtgewicht" %}</th>
+                <th scope="col">{% trans "Gesamtpreis" %}</th>
             </thead>
     {% for o in orders %}
         <tr>
             <td>{{ o.user }}</td>
             <td>{{ o.total_weight | floatformat:2 }}</td>
-            <td>{{ o.total_price | floatformat:2 }}</td>
+            <td>&euro; {{ o.total_price | floatformat:2 }}</td>
         </tr>
     {% endfor  %}
             </table>

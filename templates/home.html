@@ -1,48 +1,19 @@
 {% extends 'base.html' %}
 {% load i18n static %}
 
-{% block title %}Home{% endblock %}
+{% block title %}{% trans "Laden" %}{% endblock %}
 
 {% block content %}
 
-    <h1>Hi {{ user.username }}!</h1>
+    <form class="d-flex">
+      <h2>Artikel:&nbsp;</h2>
+    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-dark" type="submit">Search</button>
+    </form>
 
-    <p><a href="{% url 'logout' %}">Log Out</a></p>
-    {% if user.is_staff %}
-    <p><a href="{% url 'order_overview' %}">{% trans "Übersicht aller Bestellungen" %}</a></p>
-    {% endif %}
+    <hr>
 
-    <h2>Dein aktuelle Bestellung</h2>
-    {% if user_order.fullfilled == False %}
-        {% trans "Bestellnummer:" %} {{ user_order.id }}<br>
-        {% trans "Gesamtgewicht:" %} {{ user_order.total_weight | floatformat:2 }} <br>
-        {% trans "Gesamtpreis:" %} {{ user_order.total_price | floatformat:2 }} <br>
-    {% for be in user_order.basketelement_set.all %}
-        {{ be.name }}
-    {% endfor  %}
-    {% endif %}
-
-
-    <h2>Dein Warenkorb</h2>
-        <table cellspacing="0">
-            <thead>
-                <th>Bestellmenge</th>
-                <th>Name</th>
-                <th>Gesamtgewicht</th>
-                <th>Gesamtpreis</th>
-                <th>Aktion</th>
-            </thead>
-        {% for be in user_basket.basketelement_set.all %}
-            {% include "inc_basket.html" with e=be %}
-        {% endfor %}
-        </table>
-    <br>
-    {% trans "Gesamtgewicht:" %} {{ user_basket.total_weight | floatformat:2 }} <br>
-    {% trans "Gesamtpreis:" %} {{ user_basket.total_price | floatformat:2 }} <br>
-    <a href="{% url 'set_order' %}">{% trans "Bestellen" %}</a>
-
-    <h2>Artikel verfügbar</h2>
-    <table cellspacing="0" >
+    <table class="table table-striped" cellspacing="0" >
     <thead>
     <th>Name</th>
     <th>Gruppe</th>

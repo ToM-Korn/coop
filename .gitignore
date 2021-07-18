@@ -133,3 +133,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+/templates/bs-cheatsheet/
+/templates/bs-sidebars/
+/templates/bs-sign-in/

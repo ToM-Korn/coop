@@ -9,9 +9,9 @@
     <td>{{ e.origin }}</td>
 </tr>
 <tr>
-    <td></td>
+    <td style="text-align: center;color: lightgray;"><i style="width: 7em; height: 7em" data-feather="hexagon"></i><br>Bild noch<br>nicht verfügbar.</td>
     <td colspan="4">
-        <table cellspacing="0">
+        <table class="table table-striped" cellspacing="0">
             <thead>
                 <th>Packungsgröße</th>
                 <th>Preis</th>
@@ -26,8 +26,13 @@
                     <td>{{ sq.amount }} {{ sq.packaging_unit }}</td>
                     <td>{{ sq.price }} Euro</td>
                     <td>{{ sq.price_per_unit }} Euro / {{ sq.packaging_unit }}</td>
-                    <td><input type="number" id="e.id-sq.id" name="order_quant"> x {{ sq.amount }} {{ sq.packaging_unit }}</td>
-                    <td><input type="submit" value="hinzufuegen"></td>
+                    <td><div class="col-4 float-lg-end">
+                        <input type="number" id="e.id-sq.id" name="order_quant" class="form-control"> * {{ sq.amount }} {{ sq.packaging_unit }}
+                        </div>
+                    </td>
+                    <td><div class="cos-sm">
+                        <input class="form-control btn-secondary" type="submit" value="hinzufügen">
+                    </div></td>
                 </tr>
                 </form>
             {% endfor %}

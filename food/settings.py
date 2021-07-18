@@ -160,3 +160,13 @@ EMAIL_USE_TLS = True
 # ssl_certfile: EMAIL_SSL_CERTFILE
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+
+STATICFILES_DIRS = [
+    '/home/tom/0-Projects/food/food/static'
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static').replace('\\', '/')
+STATIC_URL = '/static/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media').replace('\\', '/')
+MEDIA_URL = '/media/'

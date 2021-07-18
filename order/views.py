@@ -11,7 +11,6 @@ from stock.models import Article, ShippingQuantity
 
 def home(request):
     if request.user.is_authenticated:
-        print(request.user.__class__)
         article_list = Article.objects.all()
         user_basket, created = Basket.objects.get_or_create(user=request.user)
         user_order, created = Order.objects.get_or_create(user=request.user)
@@ -19,6 +18,16 @@ def home(request):
                                              'user_basket': user_basket,
                                              'user_order': user_order})
     return render(request, 'home.html')
+
+@login_required()
+def basket(request):
+    user_basket, created = Basket.objects.get_or_create(user=request.user)
+    return render(request, 'basket.html', {'user_basket': user_basket})
+
+@login_required()
+def order(request):
+    user_order, created = Order.objects.get_or_create(user=request.user)
+    return render(request, 'order.html', {'user_order': user_order})
 
 @login_required()
 @permission_required('is_staff')
@@ -63,7 +72,7 @@ def set_order(request):
     order.save()
     basket.save()
 
-    return redirect(resolve_url('home'))
+    return redirect(resolve_url('order'))
 
 @login_required()
 def basket_add(request, article_id, shipping_quant_id):
@@ -71,18 +80,19 @@ def basket_add(request, article_id, shipping_quant_id):
         data = request.POST
         amount = data['order_quant']
 
-    article_quant = get_object_or_404(ShippingQuantity, pk=shipping_quant_id, article=article_id)
-    current_user = request.user
+    if amount != '':
+        article_quant = get_object_or_404(ShippingQuantity, pk=shipping_quant_id, article=article_id)
+        current_user = request.user
 
-    basket, created = Basket.objects.get_or_create(user=current_user)
+        basket, created = Basket.objects.get_or_create(user=current_user)
 
-    be = BasketElement()
-    be.amount = amount
-    be.basket = basket
-    be.element = article_quant
-    be.save()
+        be = BasketElement()
+        be.amount = amount
+        be.basket = basket
+        be.element = article_quant
+        be.save()
 
-    basket.save()
+        basket.save()
 
     return redirect(resolve_url('home'))
 
@@ -94,4 +104,4 @@ def basket_remove(request, basket_item_id):
 
     basket.save()
 
-    return redirect(resolve_url('home'))
+    return redirect(resolve_url('basket'))

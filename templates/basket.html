@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{% block title %}{% trans "Laden" %}{% endblock %}
+
+{% block content %}
+    <h2>Dein Warenkorb</h2>
+        <table class="table table-striped" cellspacing="0">
+            <thead>
+                <th>Bestellmenge</th>
+                <th>Name</th>
+                <th>Gesamtgewicht</th>
+                <th>Gesamtpreis</th>
+                <th>Aktion</th>
+            </thead>
+        {% for be in user_basket.basketelement_set.all %}
+            {% include "inc_basket.html" with e=be %}
+        {% endfor %}
+        </table>
+    <br>
+    {% trans "Gesamtgewicht:" %} {{ user_basket.total_weight | floatformat:2 }} <br>
+    {% trans "Gesamtpreis:" %} {{ user_basket.total_price | floatformat:2 }} <br>
+    <a href="{% url 'set_order' %}">{% trans "Bestellen" %}</a>
+{% endblock %}
