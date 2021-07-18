@@ -31,19 +31,5 @@
     {% trans "Gesamtgewicht:" %} {{ user_basket.total_weight | floatformat:2 }} <br>
     {% trans "Gesamtpreis:" %} {{ user_basket.total_price | floatformat:2 }} <br>
     <a href="{% url 'set_order' %}">{% trans "Bestellen" %}</a>
-
-    <h2>Artikel verfügbar</h2>
-    <table cellspacing="0" >
-    <thead>
-    <th>Name</th>
-    <th>Gruppe</th>
-    <th>Lieferant</th>
-    <th>Marke</th>
-    <th>Herkunft</th>
-    </thead>
-    {% for e in article_list %}
-        {% include "inc_stock.html" with e=e %}
-    {% endfor %}
-    </table>
-
+    
 {% endblock %}
